@@ -32,7 +32,7 @@ export default function Footer() {
             {[
               { icon: FiGithub, href: 'https://github.com/NoumanIjazz' },
               { icon: FiLinkedin, href: 'https://www.linkedin.com/in/muhammad-nouman-ijaz-188726370' },
-              { icon: FiMail, href: 'mailto:Nouman.Ijaz@horizondigital.au' },
+              { icon: FiMail, href: 'mailto:noumanabbasi629@gmail.com' },
             ].map(({ icon: Icon, href }) => (
               <a key={href} href={href} target="_blank" rel="noopener noreferrer"
                 className="w-8 h-8 border border-cyber-border/40 flex items-center justify-center text-cyber-muted hover:text-cyber-cyan hover:border-cyber-cyan/50 transition-all duration-300">

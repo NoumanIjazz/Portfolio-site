@@ -5,7 +5,7 @@ import { FiUser, FiMapPin, FiMail, FiPhone, FiCalendar, FiAward, FiGlobe } from 
 const personalInfo = [
   { icon: FiCalendar, label: 'Date of Birth', value: '28 Feb 2000' },
   { icon: FiMapPin, label: 'Location', value: 'Lahore, Pakistan' },
-  { icon: FiMail, label: 'Email', value: 'Nouman.Ijaz@horizondigital.au' },
+  { icon: FiMail, label: 'Email', value: 'noumanabbasi629@gmail.com' },
   { icon: FiGlobe, label: 'Nationality', value: 'Pakistani' },
   { icon: FiAward, label: 'University', value: 'COMSATS University, Vehari' },
   { icon: FiAward, label: 'Degree', value: 'BS Computer Science – 3.41 GPA' },

@@ -10,8 +10,8 @@ const contactInfo = [
   {
     icon: FiMail,
     label: 'Email',
-    value: 'Nouman.Ijaz@horizondigital.au',
-    href: 'mailto:Nouman.Ijaz@horizondigital.au',
+    value: 'noumanabbasi629@gmail.com',
+    href: 'mailto:noumanabbasi629@gmail.com',
     color: '#00d4ff',
   },
   {

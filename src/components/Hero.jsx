@@ -221,7 +221,7 @@ export default function Hero() {
               {[
                 { icon: FiGithub, href: 'https://github.com/NoumanIjazz', label: 'GitHub' },
                 { icon: FiLinkedin, href: 'https://www.linkedin.com/in/muhammad-nouman-ijaz-188726370', label: 'LinkedIn' },
-                { icon: FiMail, href: 'mailto:Nouman.Ijaz@horizondigital.au', label: 'Email' },
+                { icon: FiMail, href: 'mailto:noumanabbasi629@gmail.com', label: 'Email' },
               ].map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}

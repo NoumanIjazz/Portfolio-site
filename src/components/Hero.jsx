@@ -207,7 +207,7 @@ export default function Hero() {
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </button>
               </Link>
-              <a href="/Nouman_Ijaz_CV.pdf" download>
+              <a href="/Nouman_Ijaz_CV.pdf" download="Muhammad_Nouman_Ijaz_CV.pdf">
                 <button className="cyber-btn-secondary group flex items-center gap-2">
                   <FiDownload size={14} />
                   <span>Download CV</span>
@@ -263,7 +263,7 @@ export default function Hero() {
                 style={{ background: 'radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%)' }} />
 
               {/* Hexagonal frame */}
-              <div className="relative w-72 h-72 sm:w-80 sm:h-80">
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80">
                 {/* Corners */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyber-cyan" />
                 <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyber-cyan" />
@@ -290,7 +290,10 @@ export default function Hero() {
                   <img
                     src="/profile.jpeg"
                     alt="Muhammad Nouman Ijaz"
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover object-center"
+                    style={{ imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
+                    loading="eager"
+                    decoding="sync"
                   />
                   {/* Color overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-cyber-cyan/5 to-cyber-purple/5" />

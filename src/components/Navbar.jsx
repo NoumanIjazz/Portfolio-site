@@ -79,7 +79,7 @@ export default function Navbar() {
 
               <a
                 href="/Nouman_Ijaz_CV.pdf"
-                download
+                download="Muhammad_Nouman_Ijaz_CV.pdf"
                 className="ml-4 cyber-btn-primary text-xs px-4 py-2"
               >
                 <span className="font-mono">Download CV</span>
@@ -124,7 +124,7 @@ export default function Navbar() {
               ))}
               <a
                 href="/Nouman_Ijaz_CV.pdf"
-                download
+                download="Muhammad_Nouman_Ijaz_CV.pdf"
                 className="mt-4 cyber-btn-primary text-center text-xs"
                 onClick={() => setMenuOpen(false)}
               >

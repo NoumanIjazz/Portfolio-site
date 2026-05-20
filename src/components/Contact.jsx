@@ -1,10 +1,15 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import emailjs from '@emailjs/browser';
 import {
   FiMail, FiMapPin, FiPhone, FiLinkedin, FiGithub,
   FiSend, FiCheck, FiAlertCircle, FiExternalLink
 } from 'react-icons/fi';
+
+const EMAILJS_SERVICE_ID  = 'service_l0tmsri';
+const EMAILJS_TEMPLATE_ID = 'template_326ec3p';
+const EMAILJS_PUBLIC_KEY  = 'DuwG4BGwZ6-Q1nUAy';
 
 const contactInfo = [
   {
@@ -54,12 +59,26 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    // Simulate sending (replace with EmailJS or Formspree in production)
-    setTimeout(() => {
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:  formData.name,
+          from_email: formData.email,
+          subject:    formData.subject,
+          message:    formData.message,
+          reply_to:   formData.email,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setStatus('idle'), 5000);
-    }, 1500);
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   return (

@@ -7,9 +7,9 @@ import {
   FiSend, FiCheck, FiAlertCircle, FiExternalLink
 } from 'react-icons/fi';
 
-const EMAILJS_SERVICE_ID  = 'service_l0tmsri';
-const EMAILJS_TEMPLATE_ID = 'template_326ec3p';
-const EMAILJS_PUBLIC_KEY  = 'DuwG4BGwZ6-Q1nUAy';
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const contactInfo = [
   {

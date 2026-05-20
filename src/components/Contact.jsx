@@ -52,28 +52,45 @@ const contactInfo = [
 export default function Contact() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState('idle');
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const validate = () => {
+    const e = {};
+    if (!formData.name.trim())    e.name    = 'Name is required';
+    if (!formData.email.trim())   e.email   = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = 'Enter a valid email';
+    if (!formData.subject.trim()) e.subject = 'Subject is required';
+    if (!formData.message.trim()) e.message = 'Message is required';
+    return e;
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) setErrors({ ...errors, [e.target.name]: '' });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
     setStatus('sending');
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name:  formData.name,
-          from_email: formData.email,
-          subject:    formData.subject,
-          message:    formData.message,
-          reply_to:   formData.email,
+          from_name:  formData.name.trim(),
+          from_email: formData.email.trim(),
+          subject:    formData.subject.trim(),
+          message:    formData.message.trim(),
+          reply_to:   formData.email.trim(),
         },
         EMAILJS_PUBLIC_KEY
       );
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
+      setErrors({});
       setTimeout(() => setStatus('idle'), 5000);
     } catch {
       setStatus('error');
@@ -165,7 +182,7 @@ export default function Contact() {
                 Send a Message
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                 <div className="grid sm:grid-cols-2 gap-5">
                   {/* Name */}
                   <div>
@@ -177,11 +194,11 @@ export default function Contact() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      required
                       placeholder="John Doe"
-                      className="w-full bg-cyber-bg/60 border border-cyber-border/50 text-white text-sm px-4 py-3 outline-none focus:border-cyber-cyan/60 transition-colors placeholder-cyber-muted/50 font-mono"
+                      className={`w-full bg-cyber-bg/60 border text-white text-sm px-4 py-3 outline-none transition-colors placeholder-cyber-muted/50 font-mono ${errors.name ? 'border-red-500/70 focus:border-red-500' : 'border-cyber-border/50 focus:border-cyber-cyan/60'}`}
                       style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}
                     />
+                    {errors.name && <p className="mt-1 text-red-400 text-xs font-mono">{errors.name}</p>}
                   </div>
                   {/* Email */}
                   <div>
@@ -193,11 +210,11 @@ export default function Contact() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
                       placeholder="john@example.com"
-                      className="w-full bg-cyber-bg/60 border border-cyber-border/50 text-white text-sm px-4 py-3 outline-none focus:border-cyber-cyan/60 transition-colors placeholder-cyber-muted/50 font-mono"
+                      className={`w-full bg-cyber-bg/60 border text-white text-sm px-4 py-3 outline-none transition-colors placeholder-cyber-muted/50 font-mono ${errors.email ? 'border-red-500/70 focus:border-red-500' : 'border-cyber-border/50 focus:border-cyber-cyan/60'}`}
                       style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}
                     />
+                    {errors.email && <p className="mt-1 text-red-400 text-xs font-mono">{errors.email}</p>}
                   </div>
                 </div>
 
@@ -211,11 +228,11 @@ export default function Contact() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    required
                     placeholder="Project Collaboration / Job Opportunity / ..."
-                    className="w-full bg-cyber-bg/60 border border-cyber-border/50 text-white text-sm px-4 py-3 outline-none focus:border-cyber-cyan/60 transition-colors placeholder-cyber-muted/50 font-mono"
+                    className={`w-full bg-cyber-bg/60 border text-white text-sm px-4 py-3 outline-none transition-colors placeholder-cyber-muted/50 font-mono ${errors.subject ? 'border-red-500/70 focus:border-red-500' : 'border-cyber-border/50 focus:border-cyber-cyan/60'}`}
                     style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}
                   />
+                  {errors.subject && <p className="mt-1 text-red-400 text-xs font-mono">{errors.subject}</p>}
                 </div>
 
                 {/* Message */}
@@ -227,12 +244,12 @@ export default function Contact() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    required
                     rows={5}
                     placeholder="Tell me about your project, opportunity, or just say hello..."
-                    className="w-full bg-cyber-bg/60 border border-cyber-border/50 text-white text-sm px-4 py-3 outline-none focus:border-cyber-cyan/60 transition-colors placeholder-cyber-muted/50 font-mono resize-none"
+                    className={`w-full bg-cyber-bg/60 border text-white text-sm px-4 py-3 outline-none transition-colors placeholder-cyber-muted/50 font-mono resize-none ${errors.message ? 'border-red-500/70 focus:border-red-500' : 'border-cyber-border/50 focus:border-cyber-cyan/60'}`}
                     style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}
                   />
+                  {errors.message && <p className="mt-1 text-red-400 text-xs font-mono">{errors.message}</p>}
                 </div>
 
                 {/* Submit */}

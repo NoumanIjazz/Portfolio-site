@@ -28,7 +28,7 @@ const experiences = [
 const education = [
   {
     degree: 'BS Computer Science',
-    institution: 'COMSATS University Islamabad, Vehari Campus',
+    institution: 'COMSATS University Islamabad',
     period: '2021 – 2025',
     gpa: '3.41 / 4.0',
     location: 'Vehari, Pakistan',

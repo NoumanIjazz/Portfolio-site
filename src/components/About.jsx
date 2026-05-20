@@ -7,7 +7,7 @@ const personalInfo = [
   { icon: FiMapPin, label: 'Location', value: 'Lahore, Pakistan' },
   { icon: FiMail, label: 'Email', value: 'noumanabbasi629@gmail.com' },
   { icon: FiGlobe, label: 'Nationality', value: 'Pakistani' },
-  { icon: FiAward, label: 'University', value: 'COMSATS University, Vehari' },
+  { icon: FiAward, label: 'University', value: 'COMSATS University Islamabad' },
   { icon: FiAward, label: 'Degree', value: 'BS Computer Science – 3.41 GPA' },
 ];
 

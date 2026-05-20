@@ -16,9 +16,9 @@ export default function Footer() {
               <FiCode className="text-cyber-cyan text-xs -rotate-45" />
             </div>
             <span className="font-mono font-bold text-sm">
-              <span className="text-cyber-cyan">NI</span>
-              <span className="text-cyber-muted">.</span>
-              <span className="text-white">DEV</span>
+              <span className="text-cyber-cyan">Nouman</span>
+              <span className="text-cyber-muted"> </span>
+              <span className="text-white">Ijaz</span>
             </span>
           </div>
 

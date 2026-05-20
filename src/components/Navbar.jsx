@@ -45,9 +45,9 @@ export default function Navbar() {
                   <FiCode className="text-cyber-cyan text-sm z-10" />
                 </div>
                 <span className="font-mono font-bold text-sm tracking-wider">
-                  <span className="text-cyber-cyan">NI</span>
-                  <span className="text-cyber-muted">.</span>
-                  <span className="text-white">DEV</span>
+                  <span className="text-cyber-cyan">Nouman</span>
+                  <span className="text-cyber-muted"> </span>
+                  <span className="text-white">Ijaz</span>
                 </span>
               </div>
             </Link>

@@ -104,7 +104,7 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className={`relative min-h-screen flex items-center justify-center overflow-hidden ${isDark ? 'bg-cyber-bg' : 'bg-gradient-to-br from-slate-50 via-sky-50/40 to-violet-50/30'}`}>
+    <section id="hero" className={`relative min-h-screen flex items-center justify-center overflow-x-hidden ${isDark ? 'bg-cyber-bg' : 'bg-gradient-to-br from-slate-50 via-sky-50/40 to-violet-50/30'}`}>
       {/* Canvas background */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
@@ -276,7 +276,7 @@ export default function Hero() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
             className="order-1 lg:order-2 flex justify-center items-center"
           >
-            <div className="relative">
+            <div className="relative mx-16 sm:mx-20 lg:mx-0">
               {/* Outer rotating ring */}
               <motion.div
                 animate={{ rotate: 360 }}
@@ -286,7 +286,7 @@ export default function Hero() {
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                className={`absolute -inset-12 rounded-full border border-dashed ${isDark ? 'border-cyber-purple/15' : 'border-violet-300/30'}`}
+                className={`absolute -inset-12 rounded-full border border-dashed hidden sm:block ${isDark ? 'border-cyber-purple/15' : 'border-violet-300/30'}`}
               />
 
               {/* Light mode: gradient glow ring */}
@@ -346,7 +346,7 @@ export default function Hero() {
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
                   whileHover={{ scale: 1.08 }}
-                  className={`absolute -right-4 top-8 px-3 py-2 text-xs font-mono border shadow-lg ${
+                  className={`absolute -right-2 sm:-right-4 top-8 px-3 py-2 text-xs font-mono border shadow-lg ${
                     isDark ? 'bg-cyber-surface border-cyber-cyan/30 shadow-cyber' : 'bg-white/90 border-sky-200 backdrop-blur-sm rounded-xl'
                   }`}
                 >
@@ -358,7 +358,7 @@ export default function Hero() {
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                   whileHover={{ scale: 1.08 }}
-                  className={`absolute -left-8 bottom-12 px-3 py-2 text-xs font-mono border shadow-lg ${
+                  className={`absolute -left-2 sm:-left-8 bottom-12 px-3 py-2 text-xs font-mono border shadow-lg ${
                     isDark ? 'bg-cyber-surface border-cyber-purple/30 shadow-purple' : 'bg-white/90 border-violet-200 backdrop-blur-sm rounded-xl'
                   }`}
                 >
@@ -370,7 +370,7 @@ export default function Hero() {
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
                   whileHover={{ scale: 1.08 }}
-                  className={`absolute -right-6 bottom-16 px-3 py-2 text-xs font-mono border shadow-lg ${
+                  className={`absolute -right-2 sm:-right-6 bottom-16 px-3 py-2 text-xs font-mono border shadow-lg ${
                     isDark ? 'bg-cyber-surface border-green-500/30' : 'bg-white/90 border-emerald-200 backdrop-blur-sm rounded-xl'
                   }`}
                 >

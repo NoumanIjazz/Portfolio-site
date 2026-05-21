@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiCode } from 'react-icons/fi';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
 
 const navLinks = [
   { to: 'about', label: 'About' },
@@ -16,6 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState('');
+  const { isDark } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -31,7 +34,9 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-cyber-bg/90 backdrop-blur-xl border-b border-cyber-border/50 shadow-cyber'
+            ? isDark
+              ? 'bg-cyber-bg/90 backdrop-blur-xl border-b border-cyber-border/50 shadow-cyber'
+              : 'bg-white/90 backdrop-blur-xl border-b border-slate-200 shadow-sm'
             : 'bg-transparent'
         }`}
       >
@@ -46,8 +51,8 @@ export default function Navbar() {
                 </div>
                 <span className="font-mono font-bold text-sm tracking-wider">
                   <span className="text-cyber-cyan">Nouman</span>
-                  <span className="text-cyber-muted"> </span>
-                  <span className="text-white">Ijaz</span>
+                  <span className={isDark ? 'text-cyber-muted' : 'text-slate-400'}> </span>
+                  <span className={isDark ? 'text-white' : 'text-slate-800'}>Ijaz</span>
                 </span>
               </div>
             </Link>
@@ -62,8 +67,12 @@ export default function Navbar() {
                   duration={500}
                   spy
                   onSetActive={() => setActive(link.to)}
-                  className={`relative px-4 py-2 text-sm font-medium tracking-wider cursor-pointer transition-all duration-300 group ${
-                    active === link.to ? 'text-cyber-cyan' : 'text-cyber-muted hover:text-white'
+                  className={`relative px-4 py-2 text-sm font-medium tracking-wider cursor-pointer transition-all duration-300 ${
+                    active === link.to
+                      ? 'text-cyber-cyan'
+                      : isDark
+                        ? 'text-cyber-muted hover:text-white'
+                        : 'text-slate-500 hover:text-slate-900'
                   }`}
                 >
                   <span className="font-mono text-cyber-cyan/40 text-xs mr-1">0{i + 1}.</span>
@@ -77,22 +86,27 @@ export default function Navbar() {
                 </Link>
               ))}
 
+              <ThemeToggle />
+
               <a
                 href="/Nouman_Ijaz_CV.pdf"
                 download="Muhammad_Nouman_Ijaz_CV.pdf"
-                className="ml-4 cyber-btn-primary text-xs px-4 py-2"
+                className="ml-3 cyber-btn-primary text-xs px-4 py-2"
               >
                 <span className="font-mono">Download CV</span>
               </a>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2 text-cyber-cyan border border-cyber-border/50"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
-            </button>
+            {/* Mobile: toggle + hamburger */}
+            <div className="md:hidden flex items-center gap-3">
+              <ThemeToggle />
+              <button
+                className={`p-2 border ${isDark ? 'text-cyber-cyan border-cyber-border/50' : 'text-slate-600 border-slate-300'}`}
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -107,8 +121,11 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 md:hidden"
           >
-            <div className="absolute inset-0 bg-cyber-bg/95 backdrop-blur-xl" onClick={() => setMenuOpen(false)} />
-            <div className="absolute right-0 top-0 bottom-0 w-64 bg-cyber-surface border-l border-cyber-border/50 flex flex-col justify-center px-8 gap-4">
+            <div
+              className={`absolute inset-0 backdrop-blur-xl ${isDark ? 'bg-cyber-bg/95' : 'bg-white/95'}`}
+              onClick={() => setMenuOpen(false)}
+            />
+            <div className={`absolute right-0 top-0 bottom-0 w-64 flex flex-col justify-center px-8 gap-4 border-l ${isDark ? 'bg-cyber-surface border-cyber-border/50' : 'bg-white border-slate-200'}`}>
               {navLinks.map((link, i) => (
                 <Link
                   key={link.to}
@@ -116,7 +133,11 @@ export default function Navbar() {
                   smooth
                   duration={500}
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-3 text-lg font-medium text-cyber-text hover:text-cyber-cyan transition-colors cursor-pointer py-3 border-b border-cyber-border/30"
+                  className={`flex items-center gap-3 text-lg font-medium cursor-pointer py-3 border-b transition-colors ${
+                    isDark
+                      ? 'text-cyber-text hover:text-cyber-cyan border-cyber-border/30'
+                      : 'text-slate-700 hover:text-cyber-cyan border-slate-100'
+                  }`}
                 >
                   <span className="font-mono text-cyber-cyan/50 text-xs">0{i + 1}.</span>
                   {link.label}

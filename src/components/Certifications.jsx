@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FiExternalLink, FiAward, FiCalendar, FiShield, FiCheckCircle } from 'react-icons/fi';
 import { FaAws } from 'react-icons/fa';
+import { useTheme } from '../context/ThemeContext';
 
 const certifications = [
   {
@@ -63,7 +64,7 @@ const trainings = [
   },
 ];
 
-function CertCard({ cert, index, inView }) {
+function CertCard({ cert, index, inView, isDark }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -71,42 +72,35 @@ function CertCard({ cert, index, inView }) {
       transition={{ duration: 0.7, delay: index * 0.15 }}
       className="relative group"
     >
-      {/* Outer glow on hover */}
-      <div
-        className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ background: `linear-gradient(135deg, ${cert.color}30, transparent 60%)`, filter: 'blur(1px)' }}
-      />
-
-      <div className="cyber-card p-8 h-full relative">
+      <div className="cyber-card p-8 h-full relative hover:shadow-xl transition-all duration-300">
         {/* Top gradient bar */}
-        <div className="absolute top-0 left-0 right-0 h-1"
+        <div className="absolute top-0 left-0 right-0 h-1 rounded-t-xl"
           style={{ background: `linear-gradient(90deg, transparent, ${cert.color}, transparent)` }} />
 
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div className="flex items-center gap-4">
-            {/* Icon circle */}
-            <div className="relative w-16 h-16 flex items-center justify-center border-2 flex-shrink-0"
+            <div className={`relative w-16 h-16 flex items-center justify-center border-2 flex-shrink-0 rounded-xl`}
               style={{ borderColor: cert.color, background: `${cert.color}10` }}>
               <span className="text-2xl">{cert.badge}</span>
-              <div className="absolute -top-1 -right-1 w-4 h-4 border-2 border-green-400 bg-cyber-bg rounded-full flex items-center justify-center">
-                <FiCheckCircle size={8} className="text-green-400" />
+              <div className={`absolute -top-1 -right-1 w-4 h-4 border-2 border-green-400 rounded-full flex items-center justify-center ${isDark ? 'bg-cyber-bg' : 'bg-white'}`}>
+                <FiCheckCircle size={8} className="text-green-500" />
               </div>
             </div>
             <div>
-              <h3 className="text-white font-black text-xl leading-tight mb-1">{cert.title}</h3>
+              <h3 className={`font-black text-xl leading-tight mb-1 ${isDark ? 'text-white' : 'text-slate-800'}`}>{cert.title}</h3>
               <p className="font-semibold text-sm" style={{ color: cert.color }}>{cert.issuer}</p>
             </div>
           </div>
         </div>
 
         {/* Dates */}
-        <div className="flex flex-wrap gap-4 mb-6 pb-6 border-b border-cyber-border/30">
-          <div className="flex items-center gap-2 text-xs font-mono text-cyber-muted">
-            <FiCalendar size={10} className="text-green-400" />
-            <span>Issued: <span className="text-white">{cert.issued}</span></span>
+        <div className={`flex flex-wrap gap-4 mb-6 pb-6 border-b ${isDark ? 'border-cyber-border/30' : 'border-slate-100'}`}>
+          <div className={`flex items-center gap-2 text-xs font-mono ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>
+            <FiCalendar size={10} className="text-green-500" />
+            <span>Issued: <span className={isDark ? 'text-white' : 'text-slate-700'}>{cert.issued}</span></span>
           </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-cyber-muted">
+          <div className={`flex items-center gap-2 text-xs font-mono ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>
             <FiCalendar size={10} style={{ color: cert.color }} />
             <span>Valid until: <span style={{ color: cert.color }}>{cert.expires}</span></span>
           </div>
@@ -115,7 +109,7 @@ function CertCard({ cert, index, inView }) {
         {/* Highlights */}
         <ul className="space-y-3 mb-6">
           {cert.highlights.map((h, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm text-cyber-muted">
+            <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>
               <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: cert.color }} />
               {h}
             </li>
@@ -125,7 +119,7 @@ function CertCard({ cert, index, inView }) {
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-6">
           {cert.tags.map(tag => (
-            <span key={tag} className="px-2.5 py-1 text-xs font-mono border transition-all duration-300 hover:opacity-80"
+            <span key={tag} className="px-2.5 py-1 text-xs font-mono border rounded-lg transition-all duration-300"
               style={{ borderColor: `${cert.color}30`, color: cert.color, background: `${cert.color}08` }}>
               {tag}
             </span>
@@ -137,7 +131,7 @@ function CertCard({ cert, index, inView }) {
           href={cert.verifyUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-mono font-bold tracking-wider border transition-all duration-300 hover:scale-105"
+          className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-mono font-bold tracking-wider border rounded-lg transition-all duration-300 hover:scale-105"
           style={{
             borderColor: cert.color,
             color: cert.color,
@@ -155,25 +149,37 @@ function CertCard({ cert, index, inView }) {
 
 export default function Certifications() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
+  const { isDark } = useTheme();
 
   return (
-    <section id="certifications" className="relative py-24 overflow-hidden">
+    <section id="certifications" className={`relative py-24 overflow-hidden ${isDark ? '' : 'bg-gradient-to-b from-slate-50 to-white'}`}>
+      {!isDark && (
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-64 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse, rgba(14,165,233,0.06) 0%, transparent 70%)', filter: 'blur(30px)' }} />
+      )}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(0,212,255,0.2), rgba(124,58,237,0.2), transparent)' }} />
+        style={{ background: isDark ? 'linear-gradient(90deg, transparent, rgba(0,212,255,0.2), rgba(124,58,237,0.2), transparent)' : 'linear-gradient(90deg, transparent, rgba(14,165,233,0.2), rgba(124,58,237,0.2), transparent)' }} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyber-cyan text-xs tracking-widest mb-2">05 / CERTIFICATIONS</p>
+          <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.1 }}
+            className={`font-mono text-xs tracking-[0.25em] mb-2 ${isDark ? 'text-cyber-cyan' : 'text-sky-500'}`}>
+            05 / CERTIFICATIONS
+          </motion.p>
           <h2 className="section-heading">Verified Expertise</h2>
-          <div className="w-24 h-px mx-auto mt-4" style={{ background: 'linear-gradient(90deg, transparent, #00d4ff, transparent)' }} />
-          <p className="text-cyber-muted text-sm mt-4 max-w-xl mx-auto">
+          <motion.div
+            initial={{ scaleX: 0 }} animate={inView ? { scaleX: 1 } : {}} transition={{ duration: 0.7, delay: 0.3 }}
+            className="w-24 h-0.5 mx-auto mt-4 origin-center"
+            style={{ background: isDark ? 'linear-gradient(90deg, transparent, #00d4ff, transparent)' : 'linear-gradient(90deg, transparent, #0ea5e9, #7c3aed, transparent)' }}
+          />
+          <p className={`text-sm mt-4 max-w-xl mx-auto ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>
             Industry-recognized credentials validating my technical competencies
           </p>
         </motion.div>
@@ -181,7 +187,7 @@ export default function Certifications() {
         {/* Cert cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {certifications.map((cert, i) => (
-            <CertCard key={cert.id} cert={cert} index={i} inView={inView} />
+            <CertCard key={cert.id} cert={cert} index={i} inView={inView} isDark={isDark} />
           ))}
         </div>
 
@@ -191,9 +197,9 @@ export default function Certifications() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <h3 className="flex items-center gap-2 text-white font-bold mb-6">
+          <h3 className={`flex items-center gap-2 font-bold mb-6 ${isDark ? 'text-white' : 'text-slate-800'}`}>
             <span>📚</span> Additional Training
-            <div className="flex-1 h-px bg-cyber-border/40 ml-3" />
+            <div className={`flex-1 h-px ml-3 ${isDark ? 'bg-cyber-border/40' : 'bg-slate-200'}`} />
           </h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {trainings.map((t, i) => (
@@ -202,13 +208,12 @@ export default function Certifications() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                className="flex items-center gap-4 p-4 border border-cyber-border/30 bg-cyber-surface/40"
-                style={{ clipPath: 'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))' }}
+                className={`flex items-center gap-4 p-4 border rounded-xl transition-all duration-200 ${isDark ? 'border-cyber-border/30 bg-cyber-surface/40 hover:border-cyber-cyan/20' : 'border-slate-100 bg-slate-50 hover:shadow-sm'}`}
               >
                 <span className="text-2xl">{t.icon}</span>
                 <div>
-                  <h4 className="text-white font-semibold text-sm">{t.title}</h4>
-                  <p className="text-cyber-muted text-xs">{t.issuer}</p>
+                  <h4 className={`font-semibold text-sm ${isDark ? 'text-white' : 'text-slate-700'}`}>{t.title}</h4>
+                  <p className={`text-xs ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>{t.issuer}</p>
                   <p className="font-mono text-xs mt-0.5" style={{ color: t.color }}>{t.period}</p>
                 </div>
               </motion.div>

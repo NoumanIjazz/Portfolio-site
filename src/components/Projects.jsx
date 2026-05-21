@@ -7,6 +7,7 @@ import {
   SiHtml5, SiCss, SiJavascript
 } from 'react-icons/si';
 import { FaAws } from 'react-icons/fa';
+import { useTheme } from '../context/ThemeContext';
 
 const projects = [
   {
@@ -79,16 +80,15 @@ const projects = [
 
 const categories = ['All', 'Full Stack', 'Frontend', 'Backend'];
 
-function ProjectCard({ project, index, inView, onClick }) {
+function ProjectCard({ project, index, inView, onClick, isDark }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ y: -6 }}
+      initial={{ opacity: 0, y: 40, scale: 0.97 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8, transition: { duration: 0.25, ease: 'easeOut' } }}
       onClick={() => onClick(project)}
-      className="cyber-card p-6 cursor-pointer group hover:border-opacity-60 transition-all duration-300 relative overflow-hidden"
-      style={{ '--hover-color': project.color }}
+      className="cyber-card p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden"
     >
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-0.5 transition-all duration-300 group-hover:opacity-100 opacity-60"
@@ -96,51 +96,50 @@ function ProjectCard({ project, index, inView, onClick }) {
 
       {/* Featured badge */}
       {project.featured && (
-        <div className="absolute top-4 right-4 px-2 py-0.5 text-xs font-mono border"
+        <div className={`absolute top-4 right-4 px-2 py-0.5 text-xs font-mono border rounded-md`}
           style={{ borderColor: `${project.color}40`, color: project.color, background: `${project.color}10` }}>
           FEATURED
         </div>
       )}
 
       <div className="mb-4">
-        {/* Category */}
         <span className="text-xs font-mono tracking-wider mb-3 block" style={{ color: project.color }}>
           {project.category}
         </span>
-        <h3 className="text-white font-bold text-lg mb-1 group-hover:text-gradient-mixed transition-colors">
+        <h3 className={`font-bold text-lg mb-1 transition-colors ${isDark ? 'text-white' : 'text-slate-800'}`}>
           {project.title}
         </h3>
-        <p className="text-cyber-muted text-sm mb-1">{project.subtitle}</p>
-        <div className="flex items-center gap-1 text-cyber-muted text-xs font-mono">
+        <p className={`text-sm mb-1 ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>{project.subtitle}</p>
+        <div className={`flex items-center gap-1 text-xs font-mono ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>
           <FiCalendar size={10} />
           {project.period}
         </div>
       </div>
 
-      <p className="text-cyber-muted text-sm leading-relaxed mb-5 line-clamp-3">
+      <p className={`text-sm leading-relaxed mb-5 line-clamp-3 ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>
         {project.description}
       </p>
 
       {/* Tech stack */}
       <div className="flex flex-wrap gap-1.5 mb-4">
         {project.tech.slice(0, 4).map(t => (
-          <span key={t} className="px-2 py-0.5 text-xs font-mono border"
+          <span key={t} className="px-2 py-0.5 text-xs font-mono border rounded-md"
             style={{ borderColor: `${project.color}30`, color: project.color, background: `${project.color}08` }}>
             {t}
           </span>
         ))}
         {project.tech.length > 4 && (
-          <span className="px-2 py-0.5 text-xs font-mono text-cyber-muted border border-cyber-border/30">
+          <span className={`px-2 py-0.5 text-xs font-mono border rounded-md ${isDark ? 'text-cyber-muted border-cyber-border/30' : 'text-slate-400 border-slate-200'}`}>
             +{project.tech.length - 4}
           </span>
         )}
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-cyber-border/30">
+      <div className={`flex items-center justify-between pt-4 border-t ${isDark ? 'border-cyber-border/30' : 'border-slate-100'}`}>
         <div className="flex gap-1">
           {project.techIcons.map((Icon, i) => (
-            <Icon key={i} size={14} className="text-cyber-muted" />
+            <Icon key={i} size={14} className={isDark ? 'text-cyber-muted' : 'text-slate-300'} />
           ))}
         </div>
         <div className="flex items-center gap-1 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity"
@@ -153,7 +152,7 @@ function ProjectCard({ project, index, inView, onClick }) {
   );
 }
 
-function ProjectModal({ project, onClose }) {
+function ProjectModal({ project, onClose, isDark }) {
   if (!project) return null;
   return (
     <motion.div
@@ -162,7 +161,7 @@ function ProjectModal({ project, onClose }) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <div className="absolute inset-0 bg-cyber-bg/90 backdrop-blur-xl" onClick={onClose} />
+      <div className={`absolute inset-0 backdrop-blur-xl ${isDark ? 'bg-cyber-bg/90' : 'bg-slate-900/70'}`} onClick={onClose} />
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
@@ -170,10 +169,10 @@ function ProjectModal({ project, onClose }) {
         className="relative cyber-card p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
         style={{ borderColor: `${project.color}40` }}
       >
-        <div className="absolute top-0 left-0 right-0 h-0.5"
+        <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-xl"
           style={{ background: `linear-gradient(90deg, transparent, ${project.color}, transparent)` }} />
 
-        <button onClick={onClose} className="absolute top-4 right-4 text-cyber-muted hover:text-white p-1">
+        <button onClick={onClose} className={`absolute top-4 right-4 p-1 rounded-lg transition-colors ${isDark ? 'text-cyber-muted hover:text-white' : 'text-slate-400 hover:text-slate-700'}`}>
           <FiX size={18} />
         </button>
 
@@ -181,24 +180,24 @@ function ProjectModal({ project, onClose }) {
           <span className="text-xs font-mono tracking-wider mb-2 block" style={{ color: project.color }}>
             {project.category}
           </span>
-          <h2 className="text-2xl font-black text-white mb-1">{project.title}</h2>
-          <p className="text-cyber-muted">{project.subtitle}</p>
-          <div className="flex items-center gap-1 text-cyber-muted text-xs font-mono mt-2">
+          <h2 className={`text-2xl font-black mb-1 ${isDark ? 'text-white' : 'text-slate-800'}`}>{project.title}</h2>
+          <p className={isDark ? 'text-cyber-muted' : 'text-slate-500'}>{project.subtitle}</p>
+          <div className={`flex items-center gap-1 text-xs font-mono mt-2 ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>
             <FiCalendar size={10} />
             {project.period}
           </div>
         </div>
 
-        <p className="text-cyber-muted leading-relaxed mb-6 text-sm">{project.description}</p>
+        <p className={`leading-relaxed mb-6 text-sm ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>{project.description}</p>
         {project.longDesc && (
-          <p className="text-cyber-muted leading-relaxed mb-6 text-sm">{project.longDesc}</p>
+          <p className={`leading-relaxed mb-6 text-sm ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>{project.longDesc}</p>
         )}
 
         <div className="mb-6">
-          <h4 className="text-white font-semibold mb-3 text-sm">Key Features</h4>
+          <h4 className={`font-semibold mb-3 text-sm ${isDark ? 'text-white' : 'text-slate-800'}`}>Key Features</h4>
           <ul className="space-y-2">
             {project.highlights.map((h, i) => (
-              <li key={i} className="flex items-center gap-2 text-sm text-cyber-muted">
+              <li key={i} className={`flex items-center gap-2 text-sm ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>
                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: project.color }} />
                 {h}
               </li>
@@ -207,10 +206,10 @@ function ProjectModal({ project, onClose }) {
         </div>
 
         <div>
-          <h4 className="text-white font-semibold mb-3 text-sm">Tech Stack</h4>
+          <h4 className={`font-semibold mb-3 text-sm ${isDark ? 'text-white' : 'text-slate-800'}`}>Tech Stack</h4>
           <div className="flex flex-wrap gap-2">
             {project.tech.map(t => (
-              <span key={t} className="px-3 py-1 text-xs font-mono border"
+              <span key={t} className="px-3 py-1 text-xs font-mono border rounded-md"
                 style={{ borderColor: `${project.color}40`, color: project.color, background: `${project.color}10` }}>
                 {t}
               </span>
@@ -226,27 +225,45 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
+  const { isDark } = useTheme();
 
   const filtered = activeFilter === 'All' ? projects : projects.filter(p => p.category === activeFilter);
 
   return (
-    <section id="projects" className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'linear-gradient(180deg, rgba(13,21,38,0.3) 0%, rgba(6,11,24,0) 100%)' }} />
+    <section id="projects" className={`relative py-24 overflow-hidden ${isDark ? '' : 'bg-gradient-to-b from-slate-50 to-white'}`}>
+      {!isDark && (
+        <>
+          <div className="absolute top-20 left-0 w-96 h-96 rounded-full pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.07) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+          <div className="absolute bottom-20 right-0 w-80 h-80 rounded-full pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)', filter: 'blur(35px)' }} />
+        </>
+      )}
+      {isDark && (
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'linear-gradient(180deg, rgba(13,21,38,0.3) 0%, rgba(6,11,24,0) 100%)' }} />
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <p className="font-mono text-cyber-cyan text-xs tracking-widest mb-2">04 / PROJECTS</p>
+          <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.1 }}
+            className={`font-mono text-xs tracking-[0.25em] mb-2 ${isDark ? 'text-cyber-cyan' : 'text-sky-500'}`}>
+            04 / PROJECTS
+          </motion.p>
           <h2 className="section-heading">Built in Production</h2>
-          <div className="w-24 h-px mx-auto mt-4" style={{ background: 'linear-gradient(90deg, transparent, #00d4ff, transparent)' }} />
-          <p className="text-cyber-muted text-sm mt-4 max-w-xl mx-auto">
+          <motion.div
+            initial={{ scaleX: 0 }} animate={inView ? { scaleX: 1 } : {}} transition={{ duration: 0.7, delay: 0.3 }}
+            className="w-24 h-0.5 mx-auto mt-4 origin-center"
+            style={{ background: isDark ? 'linear-gradient(90deg, transparent, #00d4ff, transparent)' : 'linear-gradient(90deg, transparent, #0ea5e9, #7c3aed, transparent)' }}
+          />
+          <p className={`text-sm mt-4 max-w-xl mx-auto ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>
             A showcase of projects I&apos;ve engineered — click any card to see full details
           </p>
         </motion.div>
@@ -259,17 +276,23 @@ export default function Projects() {
           className="flex justify-center gap-2 flex-wrap mb-10"
         >
           {categories.map(cat => (
-            <button
+            <motion.button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-5 py-2 text-xs font-mono tracking-wider border transition-all duration-300 ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-5 py-2 text-xs font-mono tracking-wider border rounded-full transition-all duration-300 ${
                 activeFilter === cat
-                  ? 'text-cyber-bg border-cyber-cyan bg-cyber-cyan'
-                  : 'text-cyber-muted border-cyber-border/40 hover:text-white hover:border-cyber-cyan/40'
+                  ? isDark
+                    ? 'text-cyber-bg border-cyber-cyan bg-cyber-cyan font-bold'
+                    : 'text-white border-transparent bg-gradient-to-r from-sky-500 to-violet-500 shadow-md font-bold'
+                  : isDark
+                    ? 'text-cyber-muted border-cyber-border/40 hover:text-white hover:border-cyber-cyan/40'
+                    : 'text-slate-500 border-slate-200 bg-white hover:text-slate-800 hover:border-slate-300 hover:shadow-sm'
               }`}
             >
               {cat}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
 
@@ -283,6 +306,7 @@ export default function Projects() {
                 index={i}
                 inView={inView}
                 onClick={setSelectedProject}
+                isDark={isDark}
               />
             ))}
           </AnimatePresence>
@@ -291,7 +315,7 @@ export default function Projects() {
 
       <AnimatePresence>
         {selectedProject && (
-          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} isDark={isDark} />
         )}
       </AnimatePresence>
     </section>

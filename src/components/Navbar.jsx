@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiDownload } from 'react-icons/fi';
-import { SiReact } from 'react-icons/si';
+import { FiMenu, FiX, FiDownload, FiCode } from 'react-icons/fi';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
 
@@ -72,7 +71,7 @@ export default function Navbar() {
                     transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                     className={`absolute inset-0 border rounded-sm ${isDark ? 'border-cyber-cyan/50' : 'border-sky-400/60'}`}
                   />
-                  <SiReact size={14} className={`z-10 ${isDark ? 'text-cyber-cyan' : 'text-sky-500'}`} />
+                  <FiCode size={14} className={`z-10 ${isDark ? 'text-cyber-cyan' : 'text-sky-500'}`} />
                 </div>
 
                 {/* Wordmark */}
@@ -213,7 +212,7 @@ export default function Navbar() {
               {/* Header */}
               <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-cyber-border/30' : 'border-slate-100'}`}>
                 <div className="flex items-center gap-2">
-                  <SiReact size={14} className={isDark ? 'text-cyber-cyan' : 'text-sky-500'} />
+                  <FiCode size={14} className={isDark ? 'text-cyber-cyan' : 'text-sky-500'} />
                   <span className={`font-mono font-bold text-sm ${isDark ? 'text-white' : 'text-slate-800'}`}>
                     <span className={isDark ? 'text-cyber-cyan' : 'text-sky-500'}>Nouman</span> Ijaz
                   </span>

@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
 import {
   FiGithub, FiLinkedin, FiMail, FiArrowUp,
-  FiMapPin, FiPhone, FiExternalLink,
+  FiMapPin, FiPhone, FiExternalLink, FiCode,
 } from 'react-icons/fi';
-import { SiReact, SiDjango, SiDocker } from 'react-icons/si';
+import { SiDjango, SiDocker } from 'react-icons/si';
 import { FaAws } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 
@@ -24,7 +24,7 @@ const socials = [
 ];
 
 const techStack = [
-  { icon: SiReact,   label: 'React' },
+  { icon: FiCode,   label: 'React' },
   { icon: SiDjango,  label: 'Django' },
   { icon: FaAws,     label: 'AWS' },
   { icon: SiDocker,  label: 'Docker' },
@@ -75,7 +75,7 @@ export default function Footer() {
                     transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
                     className={`absolute inset-0 border rounded-sm ${isDark ? 'border-cyber-cyan/50' : 'border-sky-400/60'}`}
                   />
-                  <SiReact size={16} className={`z-10 ${isDark ? 'text-cyber-cyan' : 'text-sky-500'}`} />
+                  <FiCode size={16} className={`z-10 ${isDark ? 'text-cyber-cyan' : 'text-sky-500'}`} />
                 </div>
                 <div className="flex flex-col leading-none">
                   <span className={`font-mono font-black text-base tracking-wider ${isDark ? 'text-white' : 'text-slate-800'}`}>

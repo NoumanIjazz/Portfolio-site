@@ -132,7 +132,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center">
 
           {/* Left: Text */}
           <motion.div
@@ -162,21 +162,21 @@ export default function Hero() {
             {/* Name */}
             <motion.h1
               variants={itemVariants}
-              className="text-5xl sm:text-6xl lg:text-7xl font-black leading-none mb-2 glitch-text"
+              className="text-4xl sm:text-5xl lg:text-7xl font-black leading-none mb-2 glitch-text"
               data-text="Muhammad"
             >
               <span className={isDark ? 'text-white' : 'text-slate-800'}>Muhammad</span>
             </motion.h1>
             <motion.h1
               variants={itemVariants}
-              className="text-5xl sm:text-6xl lg:text-7xl font-black leading-none mb-6 glitch-text"
+              className="text-4xl sm:text-5xl lg:text-7xl font-black leading-none mb-6 glitch-text"
               data-text="Nouman Ijaz"
             >
               <span className="text-gradient-mixed">Nouman Ijaz</span>
             </motion.h1>
 
             {/* Typing animation */}
-            <motion.div variants={itemVariants} className="flex items-center gap-2 text-xl sm:text-2xl font-semibold mb-6 h-10">
+            <motion.div variants={itemVariants} className="flex items-center gap-2 text-lg sm:text-2xl font-semibold mb-6 h-10">
               <span className={isDark ? 'text-cyber-muted' : 'text-slate-400'}>~/</span>
               <TypeAnimation
                 sequence={[
@@ -274,14 +274,15 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.8, x: 40 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-            className="order-1 lg:order-2 flex justify-center items-center"
+            className="order-1 lg:order-2 flex flex-col items-center gap-4"
           >
-            <div className="relative mx-16 sm:mx-20 lg:mx-0">
-              {/* Outer rotating ring */}
+            {/* Photo container — strictly contained, no negative overflow on mobile */}
+            <div className="relative">
+              {/* Rotating rings — only visible on sm+ so they never overflow mobile */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                className={`absolute -inset-6 rounded-full border border-dashed ${isDark ? 'border-cyber-cyan/20' : 'border-sky-300/40'}`}
+                className={`absolute -inset-6 rounded-full border border-dashed hidden sm:block ${isDark ? 'border-cyber-cyan/20' : 'border-sky-300/40'}`}
               />
               <motion.div
                 animate={{ rotate: -360 }}
@@ -289,27 +290,20 @@ export default function Hero() {
                 className={`absolute -inset-12 rounded-full border border-dashed hidden sm:block ${isDark ? 'border-cyber-purple/15' : 'border-violet-300/30'}`}
               />
 
-              {/* Light mode: gradient glow ring */}
-              {!isDark && (
-                <div className="absolute -inset-3 rounded-full"
-                  style={{ background: 'radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(124,58,237,0.08) 50%, transparent 70%)' }} />
-              )}
+              {/* Glow ring */}
+              <div className="absolute -inset-3 rounded-full pointer-events-none"
+                style={{ background: isDark
+                  ? 'radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%)'
+                  : 'radial-gradient(circle, rgba(14,165,233,0.15) 0%, rgba(124,58,237,0.08) 50%, transparent 70%)'
+                }} />
 
-              {/* Dark mode glow rings */}
-              {isDark && (
-                <div className="absolute -inset-4 rounded-full"
-                  style={{ background: 'radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%)' }} />
-              )}
+              {/* Photo frame — smaller on mobile: 48 (192px), grows on sm/lg */}
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
+                <div className={`absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
+                <div className={`absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
+                <div className={`absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
+                <div className={`absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
 
-              {/* Photo frame */}
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80">
-                {/* Corner decorations */}
-                <div className={`absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
-                <div className={`absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
-                <div className={`absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
-                <div className={`absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 ${isDark ? 'border-cyber-cyan' : 'border-sky-400'}`} />
-
-                {/* Scan overlay (dark only) */}
                 {isDark && (
                   <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none z-10">
                     <motion.div
@@ -321,14 +315,13 @@ export default function Hero() {
                   </div>
                 )}
 
-                {/* Profile image */}
                 <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                   className={`w-full h-full rounded-full overflow-hidden border-2 ${isDark ? 'border-cyber-cyan/40' : 'border-sky-300/60'}`}
                   style={{
                     boxShadow: isDark
-                      ? '0 0 40px rgba(0,212,255,0.3), 0 0 80px rgba(0,212,255,0.1), inset 0 0 30px rgba(0,212,255,0.05)'
+                      ? '0 0 40px rgba(0,212,255,0.3), 0 0 80px rgba(0,212,255,0.1)'
                       : '0 20px 60px rgba(14,165,233,0.2), 0 8px 24px rgba(124,58,237,0.1)'
                   }}
                 >
@@ -341,12 +334,12 @@ export default function Hero() {
                   />
                 </motion.div>
 
-                {/* Floating badges */}
+                {/* Floating badges — only on sm+ where there's room */}
                 <motion.div
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
                   whileHover={{ scale: 1.08 }}
-                  className={`absolute -right-2 sm:-right-4 top-8 px-3 py-2 text-xs font-mono border shadow-lg ${
+                  className={`hidden sm:block absolute -right-4 top-8 px-3 py-2 text-xs font-mono border shadow-lg ${
                     isDark ? 'bg-cyber-surface border-cyber-cyan/30 shadow-cyber' : 'bg-white/90 border-sky-200 backdrop-blur-sm rounded-xl'
                   }`}
                 >
@@ -358,7 +351,7 @@ export default function Hero() {
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                   whileHover={{ scale: 1.08 }}
-                  className={`absolute -left-2 sm:-left-8 bottom-12 px-3 py-2 text-xs font-mono border shadow-lg ${
+                  className={`hidden sm:block absolute -left-8 bottom-12 px-3 py-2 text-xs font-mono border shadow-lg ${
                     isDark ? 'bg-cyber-surface border-cyber-purple/30 shadow-purple' : 'bg-white/90 border-violet-200 backdrop-blur-sm rounded-xl'
                   }`}
                 >
@@ -370,13 +363,26 @@ export default function Hero() {
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
                   whileHover={{ scale: 1.08 }}
-                  className={`absolute -right-2 sm:-right-6 bottom-16 px-3 py-2 text-xs font-mono border shadow-lg ${
+                  className={`hidden sm:block absolute -right-6 bottom-16 px-3 py-2 text-xs font-mono border shadow-lg ${
                     isDark ? 'bg-cyber-surface border-green-500/30' : 'bg-white/90 border-emerald-200 backdrop-blur-sm rounded-xl'
                   }`}
                 >
                   <span className="text-emerald-500 font-semibold">Open to Work</span>
                 </motion.div>
               </div>
+            </div>
+
+            {/* Mobile-only badges row — shown instead of floating badges */}
+            <div className="flex sm:hidden items-center justify-center gap-2 flex-wrap">
+              <span className={`px-3 py-1.5 text-xs font-mono border rounded-full ${isDark ? 'bg-cyber-surface border-cyber-cyan/30 text-cyber-cyan' : 'bg-white/90 border-sky-200 text-sky-600 shadow-sm'}`}>
+                AWS Certified
+              </span>
+              <span className={`px-3 py-1.5 text-xs font-mono border rounded-full ${isDark ? 'bg-cyber-surface border-cyber-purple/30 text-cyber-purple2' : 'bg-white/90 border-violet-200 text-violet-600 shadow-sm'}`}>
+                Full-Stack Dev
+              </span>
+              <span className="px-3 py-1.5 text-xs font-mono border rounded-full border-emerald-500/30 text-emerald-500 bg-emerald-500/5">
+                Open to Work
+              </span>
             </div>
           </motion.div>
         </div>

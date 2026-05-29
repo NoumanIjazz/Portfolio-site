@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 
 const experiences = [
   {
-    role: 'Web Developer',
+    role: 'Full-Stack Software Engineer',
     company: 'Horizon Digital Pakistan',
     location: 'Lahore, Pakistan',
     period: 'Nov 2025 – Present',

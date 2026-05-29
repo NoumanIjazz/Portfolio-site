@@ -180,7 +180,7 @@ export default function Hero() {
               <span className={isDark ? 'text-cyber-muted' : 'text-slate-400'}>~/</span>
               <TypeAnimation
                 sequence={[
-                  'Full-Stack Developer', 2000,
+                  'Full-Stack Software Engineer', 2000,
                   'DevOps Engineer', 2000,
                   'Cloud Architect (AWS)', 2000,
                   'Backend Engineer (Django)', 2000,

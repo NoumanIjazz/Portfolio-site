@@ -82,7 +82,7 @@ export default function Footer() {
                     <span className={isDark ? 'text-cyber-cyan' : 'text-sky-500'}>Nouman</span> Ijaz
                   </span>
                   <span className={`font-mono text-[9px] tracking-[0.2em] mt-0.5 ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>
-                    FULL-STACK DEV · DEVOPS
+                    FULL-STACK SOFTWARE ENGINEER · DEVOPS
                   </span>
                 </div>
               </motion.div>

@@ -81,7 +81,7 @@ export default function Navbar() {
                     {' '}Ijaz
                   </span>
                   <span className={`font-mono text-[9px] tracking-[0.2em] ${isDark ? 'text-cyber-muted' : 'text-slate-400'}`}>
-                    FULL-STACK DEV
+                    FULL-STACK SOFTWARE ENGINEER
                   </span>
                 </div>
               </motion.div>

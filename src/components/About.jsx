@@ -69,7 +69,7 @@ export default function About() {
               </div>
 
               <p className={`leading-relaxed mb-5 text-sm ${isDark ? 'text-cyber-muted' : 'text-slate-500'}`}>
-                I&apos;m a <span className={`font-semibold ${isDark ? 'text-cyber-cyan' : 'text-sky-600'}`}>Versatile Full-Stack Developer & DevOps Engineer</span> with
+                I&apos;m a <span className={`font-semibold ${isDark ? 'text-cyber-cyan' : 'text-sky-600'}`}>Full-Stack Software Engineer & DevOps Engineer</span> with
                 a passion for building secure, scalable, and high-performance web applications.
                 Currently working at <span className={`font-semibold ${isDark ? 'text-white' : 'text-slate-800'}`}>Horizon Digital Pakistan</span> where I architect
                 and deploy production-grade systems.

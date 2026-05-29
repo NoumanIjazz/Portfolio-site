@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiExternalLink, FiAward, FiCalendar, FiShield, FiCheckCircle } from 'react-icons/fi';
+import { FiExternalLink, FiAward, FiCalendar, FiShield, FiCheckCircle, FiGlobe } from 'react-icons/fi';
 import { FaAws } from 'react-icons/fa';
 import { useTheme } from '../context/ThemeContext';
 
@@ -27,6 +27,26 @@ const certifications = [
   },
   {
     id: 2,
+    title: 'English Works! Program',
+    issuer: 'U.S. Embassy — Regional English Language Office (RELO)',
+    issued: 'February 2025',
+    expires: 'Lifetime',
+    credentialId: 'EW-RELO-PKI-2025',
+    verifyUrl: 'https://pk.usembassy.gov/education-culture/',
+    color: '#10b981',
+    icon: FiGlobe,
+    iconColor: '#10b981',
+    badge: '🌐',
+    highlights: [
+      'Completed 240 hours of intensive Business English & 21st Century Employability Skills training sponsored by the U.S. Embassy Regional English Language Office (RELO), Islamabad',
+      'Developed cross-cultural communication competencies essential for global professional environments — enabling effective collaboration with international clients and distributed teams',
+      'Mastered workplace communication frameworks: professional writing, presentations, negotiation language, and virtual team dynamics aligned with U.S. Embassy standards',
+      'Sponsored by COMSATS University Islamabad, Vehari campus, and certified by Public Affairs Officer Sandeep K. Paul, U.S. Consulate General, Lahore',
+    ],
+    tags: ['Business English', 'Cross-Cultural Communication', 'Employability Skills', 'U.S. Embassy', 'Professional Development'],
+  },
+  {
+    id: 3,
     title: 'Claude Code in Action',
     issuer: 'Anthropic / Skilljar',
     issued: 'May 7, 2026',
@@ -48,13 +68,6 @@ const certifications = [
 ];
 
 const trainings = [
-  {
-    title: 'English Works! Program',
-    issuer: 'RELO Pakistan (U.S. Embassy)',
-    period: 'Aug 2024 – Feb 2025',
-    color: '#10b981',
-    icon: '🌐',
-  },
   {
     title: 'HTML & CSS Fundamentals',
     issuer: 'Online Certification Course',
@@ -139,7 +152,7 @@ function CertCard({ cert, index, inView, isDark }) {
           }}
         >
           <FiAward size={12} />
-          VERIFY CREDENTIAL
+          {cert.credentialId.startsWith('EW-') ? 'VIEW PROGRAM' : 'VERIFY CREDENTIAL'}
           <FiExternalLink size={10} />
         </a>
       </div>
@@ -184,12 +197,19 @@ export default function Certifications() {
           </p>
         </motion.div>
 
-        {/* Cert cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {certifications.map((cert, i) => (
+        {/* Cert cards — first 2 side by side, 3rd centered */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {certifications.slice(0, 2).map((cert, i) => (
             <CertCard key={cert.id} cert={cert} index={i} inView={inView} isDark={isDark} />
           ))}
         </div>
+        {certifications.length > 2 && (
+          <div className="grid md:grid-cols-2 gap-8 mb-16 md:[&>*]:col-start-1 md:justify-center">
+            <div className="md:col-span-1 md:max-w-xl md:mx-auto w-full">
+              <CertCard cert={certifications[2]} index={2} inView={inView} isDark={isDark} />
+            </div>
+          </div>
+        )}
 
         {/* Training section */}
         <motion.div
